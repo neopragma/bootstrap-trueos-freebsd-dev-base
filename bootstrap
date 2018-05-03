@@ -7,7 +7,7 @@
 
 cd ~/bootstrap-trueos-freebsd-dev-base
 
-printf "Configuring csh...\n
+printf "Configuring csh...\n"
 printf "  ...copying .cshrc file\n" 
 cp scripts/.cshrc ~/.
 printf "  ...copying .login file\n"
@@ -16,10 +16,10 @@ cp scripts/.login ~/.
 printf "Installing Python 2 and 3 packages...\n" 
 printf "  ...installing python\n"
 sudo pkg install python 
-sudo python -m pip install -U pip
+sudo python -m ensurepip
 printf "  ...installing python3\n"
 sudo pkg install python3
-sudo python3 -m pip install -U pip
+sudo python3 -m ensurepip
 
 printf "Installing Ruby 2.4...\n"
 set ruby="`pkg search ruby | grep '^ruby-2.4' | cut -d ' ' -f 1`"
