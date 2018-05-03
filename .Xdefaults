@@ -1,0 +1,12 @@
+URxvt.termName: xterm-256color
+URxvt.geometry: 120x50
+URxvt.font:xft:Monospace:pixelsize=15
+URxvt.boldfont:xft:Monospace-Bold:pixelsize=15
+URxvt.cursorColor: #0000FF
+Xft.dpi:       96
+Xft.antialias: true
+Xft.rgba:      rgb
+Xft.hinting:   true
+Xft.hintstyle: hintfull
+*foreground:   #000000
+*background:   #CCCCCC

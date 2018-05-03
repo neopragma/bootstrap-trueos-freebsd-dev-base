@@ -37,8 +37,8 @@ cp openbox/rc.xml ~/.config/openbox/.
 printf "Installing urxvt terminal emulator...\n"
 printf "  ...installing package x11/rxvt-unicode\n"
 sudo pkg install x11/rxvt-unicode
-printf "  ...initializing .Xdefaults settings for urxvt\n"
-echo "URxvt.termName: xterm-256color" >> ~/.Xdefaults 
+printf "  ...copying .Xdefaults file\n"
+cp .Xdefaults ~/.
 
 printf "Installing NeoVim text editor...\n"
 printf "  ...installing package neovim\n"

@@ -117,6 +117,22 @@ One-time run of :UpdateRemotePlugins for certain plugins.
 
 ### 4. Known issues with the bootstrap process
 
-
+None.
 
 ### 5. Known issues after system comes up
+
+None.
+
+## 6. Usage Notes
+
+### 6.1. Openbox
+
+On the login form, choose Openbox.
+
+It will start a terminal emulator automatically. 
+
+To exit from Openbox and log out, you can type the command ```lo``` in a terminal emulator. Otherwise, you can type ```openbox --exit```, or you can right-click outside of a window and choose ```Exit``` from the Openbox menu.
+
+### 6.2. NeoVim
+
+See the notes on the [introductory README](http://github.com/neopragma/provision-lightweight-development-environment) for information about NeoVim key bindings and plugins.
