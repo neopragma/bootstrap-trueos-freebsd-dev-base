@@ -26,7 +26,6 @@ set ruby="`pkg search ruby | grep '^ruby-2.4' | cut -d ' ' -f 1`"
 printf "  ...installing package $ruby\n"
 sudo pkg install "$ruby"
 
-
 printf "Installing OpenBox window manager...\n"
 printf "  ...installing package openbox\n"
 sudo pkg install openbox 
@@ -52,6 +51,38 @@ mkdir -p ~/.config/nvim/autoload
 mkdir -p ~/.config/nvim/bundle 
 mkdir -p ~/.config/nvim/pack/vendor/start
 mkdir -p ~/.config/nvim/after/indent 
+
+printf "Installing NeoVim package manager Pathogen\n" 
+curl -LSso ~/.config/nvim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+printf "Installing NeoVim plugin: deoplete\n"
+git clone git://github.com/Shougo/deoplete.nvim.git ~/.config/nvim/bundle/deoplete
+
+printf "Installing NeoVim plugin: neomake\n"
+git clone git://github.com/neomake/neomake.git ~/.config/nvim/bundle/neomake
+
+printf "Installing NeoVim plugin: nerdtree\n"
+git clone git://github.com/scrooloose/nerdtree.git ~/.config/nvim/bundle/nerdtree
+
+printf "Installing NeoVim plugin: nerdtree-git-plugin\n"
+git clone git://github.com/Xuyuanp/nerdtree-git-plugin.git ~/.config/nvim/bundle/nerdtree-git-plugin
+
+printf "Installing NeoVim plugin: c-support\n"
+git clone git://github.com/WolfgangMehner/c-support.git ~/.config/nvim/bundle/c-support
+
+printf "Installing NeoVim plugin:  python-moxs\n"
+git clone git://github.com/klen/python-mode.git ~/.config/nvim/bundle/python-mode
+
+printf "Installing NeoVim plugin: vim-ruby\n"
+git clone git://github.com/vim-ruby/vim-ruby.git ~/.config/nvim/bundle/vim-ruby
+
+printf "Copying NeoVim indentation support files\n"
+cp neovim/after/indent/* ~/.config/nvim/after/indent/.
+
+printf "Adding Spacegray color scheme to NeoVim\n"
+git clone git://github.com/ajh17/Spacegray.vim ~/.config/nvim/pack/vendor/start/Spacegray
+
+printf "Copying NeoVim configuration file (init.vim)\n"
 cp neovim/init.vim ~/.config/nvim/.
-printf "  ...copying NeoVim configuration file\n"
-mkdir -p ~/.config/nvim/autoload 
+
+
