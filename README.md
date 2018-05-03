@@ -80,7 +80,7 @@ In particular, look at:
 The directory structure of the provisioning repository looks like this:
 
 ```
-bootstrap-debian-9-dev-base/
+bootstrap-trueos-freebsd-dev-base/
     bootstrap      C Shell script to provision the instance.
 
     scripts/       ```bootstrap``` copies these files to /usr/home/dev/
@@ -107,38 +107,7 @@ cd /root/bootstrap-debian-9-dev-base
 
 Some steps can't be scripted. 
 
-check this
-
-#### 3.1. Install python support for NeoVim plugins.
-
-There are issues on debian distros with pip2. Might require some fiddling.
-
-```shell 
-pip2 install --user neovim 
-pip3 install --user neovim 
-```
-
-### 3.2. Create alias to start X session 
-
-For both the 'dev' and 'root' users, add an alias to the end of .bashrc to start an X session. Source .bashrc to enable the setting. 
-
-```shell 
-cd 
-echo "alias gui='startx'" >> .bashrc 
-. .bashrc
-```
-
-#### 3.3. Set NeoVim as the default editor 
-
-The install_neovim Chef recipe installs NeoVim into the alternatives system, but you may have to make it the default selection manually:
-
-```shell 
-update-alternatives --config editor 
-``` 
-
-Choose the number corresponding to NeoVim and press Enter.
-
-#### 3.4. Enable plugins 
+#### 3.1. Enable plugins 
 
 One-time run of :UpdateRemotePlugins for certain plugins.
 
@@ -148,43 +117,6 @@ One-time run of :UpdateRemotePlugins for certain plugins.
 
 ### 4. Known issues with the bootstrap process
 
-#### 4.1. Please use apt-cdrom
 
-You may get the error "Please use apt-cdrom to make this CD-ROM recognized by APT, apt-get update cannot be used to add new CD-ROMs".
-
-Find out which lines in the sources list refer to CD-ROMs:
-
-```shell 
-cat /etc/apt/sources.list | grep cdrom
-``` 
-
-Comment those lines out of the sources list and re-run the script.
-
-#### 4.2 update-alternatives reports broken link group
-
-If the bootstrap script partially completes and you re-run it, you might see the following warnings:
-
-```
-update-alternatives: warning: forcing reinstallation of alternative /usr/bin/gem2.4 because link group gem is broken
-
-update-alternatives: warning: forcing reinstallation of alternative /usr/bin/ruby2.4 because link group ruby is broken
-```
-
-This will not affect the installation and no corrective action is needed.
-
-#### 4.3. dpkg status database is locked by another process
-
-If you interrupt the bootstrap script while an `apt install` is in progress, the dpkg status lock file may not be deleted. When that happens you will get this message on re-running the script. 
-
-Delete the lock file and reconfigure dpkg:
-
-```shell 
-rm /var/lib/dpkg/lock 
-dpkg --configure -a 
-```
 
 ### 5. Known issues after system comes up
-
-#### 5.1. Errors from xinit/startx for non-root user
-
-Odd behavior on startx/xinit for non-root user; error messages appear but everything works anyway. Impact is 20 second delay before first terminal window is usable. Observed on debian Server 16.04 builds.
