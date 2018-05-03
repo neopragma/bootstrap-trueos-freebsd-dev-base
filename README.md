@@ -1,4 +1,4 @@
-# Debian 9: Build Base for Lightweight Development Environments
+# TrueOS OpenBSD Desktop: Build Base for Lightweight Development Environments
 
 For general information about this repo and related ones, please see [Provision Lightweight Development Environments](http://github.com/neopragma/provision-lightweight-development-environments).
 
@@ -6,95 +6,72 @@ For general information about this repo and related ones, please see [Provision 
 
 **From:** No operating system installed.
 
-**To:** Debian 9 configured to receive provisioning to customize it for software development.
+**To:** FreeBSD configured to receive provisioning to customize it for software development.
 
-## 1. Install Debian 9
+## 1. Install TrueOS Desktop edition
 
 ### 1.1. Download iso
 
-Download iso from <a href="http://www.debian.org/distrib/netinst">http://www.debian.org/distrib/netinst</a>.
+Download "TrueOS Desktop (DVD Image)" iso from <a href="https://web.trueos.org/downloads/">https://web.trueos.org/downloads/</a>.
 
-### 1.2. Install Debian 9.
+### 1.2. Install TrueOS Desktop.
 
-Install Debian 9 as a VM (any [hypervisor](hypervisor.md)). 
+Install TrueOS Desktop as a VM (any [hypervisor](hypervisor.md)). Define it as a FreeBSD OS, give it 1 GB memory and 20 GB storage.
 
-When prompted, create user 'dev' with password 'developer'. Set the root password to 'admin'.
+Use the graphical installer. Choose the desktop option. (The server option, as well as the TrueOS Server iso, had serious problems when I tried them 03 May 2018.)
 
-On the "Software selections" form, ensure the only selection is "standard system utilities." 
+Set the language etc. as you please. Accept the default partition mapping.
 
-### 1.3. Add user 'dev' to sudoers
+When it reboots, it will ask for some additional setup information.
 
-Debian distros are configured to disallow direct login as 'root'. The minimal installation we are doing doesn't install ```sudo``` at all. Add it now. 
+Set the timezone.
 
-Log in as 'dev' and switch to 'root':
+Set the root password: ```root```.
 
-```shell 
-su - 
-[admin]
-``` 
+User: ```Developer```.
+Username: ```dev```.
+Password: ```developer```.
 
-Then install ```sudo```. 
+Optional software:
 
-```shell 
-apt install sudo 
-``` 
+- SSH
 
-Now use ```visudo``` to grant sudo rights to user 'dev'.
+Click "Finish" to log in.
 
-```shell 
-visudo 
-``` 
+Log in as user 'Developer' with password 'developer'. You will use ```sudo``` for privileged operations.
 
-Find the line that looks like this:
+Choose the Lumina desktop option; Fluxbox is installed but is not configured, and out-of-the-box there is no way to start a terminal emulator from Fluxbox. 
 
-```
-root     ALL=(ALL:ALL) ALL
+Update the local package repository:
+
+```shell
+sudo pkg update -f
 ```
 
-Add a line just like it for user 'dev' so that it looks like this:
+Git is already installed on this distro. Double-check that it is present:
 
-```
-root     ALL=(ALL:ALL) ALL
-dev      ALL=(ALL:ALL) ALL
-```
-
-Save the file and return to user 'dev'. See if you can do a simple command that requires sudo, like this:
-
-```shell 
-sudo ls -la /usr/bin 
-``` 
-
-If that looks okay, proceed.
-
-## 2. Provision the instance as a "base" for development environments.
-
-This will install enough software on the instance to enable it to be used as a template for building software development environments tailored to different programming languages and development/testing tools. 
-
-### 2.1. Install git.
-
-The provisioning scripts are on Github. The instance needs git support to clone the repository and complete the configuration. 
-
-```shell 
-sudo apt install -y git 
-``` 
-
-### 2.2. Clone the repository.
-
-Become root.
-
-```shell 
-su - 
-[admin]
+```shell
+git --version
 ```
 
-Clone the repository for building a template instance from Debian 9:
+If it is not present, install it:
+
+```shell
+sudo pkg install git
+```
+
+## 2. Configure the instance as a development template
+
+### 2.1. Clone the repository.
+
+Clone the repository for building a template instance from TrueOS Desktop:
 
 ```shell 
 cd 
-git clone git://github.com/neopragma/bootstrap-debian-9-dev-base
+git clone git://github.com/neopragma/bootstrap-trueos-freebsd-dev-base
 ``` 
 
-### 2.3. (Optional) Review default configuration and modify as desired.
+### 2.2. (Optional) Review default configuration and modify as desired.
 
 If you want your template to be configured differently than the default, make the necessary changes to bash scripts, Chef recipes, and configuration files. 
 
@@ -104,31 +81,17 @@ The directory structure of the provisioning repository looks like this:
 
 ```
 bootstrap-debian-9-dev-base/
-    bootstrap              Bash script to prepare the instance to run Chef
-                           and kick off the Chef cookbook that completes
-                           the provisioning.
+    bootstrap      C Shell script to provision the instance.
 
-    scripts/               ```bootstrap``` copies these files to /usr/local/bin.
-        cli                Escape from OpenBox to command line from terminal
-        provision          Run the Chef cookbook to provision the instance
-        cook               Run one Chef cookbook or cookbook::recipe
-        recipes            List the available Chef recipes for provisioning
-        runchefspec        Run `bundle exec rake` to run rspec on Chef recipes
+    scripts/       ```bootstrap``` copies these files to /usr/home/dev/
+        .cshrc     C Shell startup script
+        .login     C Shell login script
 
-    debian_prep/           ```bootstrap``` copies these files to prepare Chef
-        Gemfile            => /root/chef-repo/cookbooks/debian_prep/
-        Rakefile           => /root/chef-repo/cookbooks/debian_prep/
-        recipes/           => /root/chef-repo/cookbooks/debian_prep/
-        spec/
-            spec_helper.rb => /root/chef-repo/cookbooks/debian_prep/spec
-            unit/recipes/  => /root/chef-repo/cookbooks/debian_prep/spec/unit/recipes
+    neovim/        ```bootstrap``` copies everything here
+                   => /usr/home/dev/.config/nvim/
 
-    neovim/                Chef recipe ```install_neovim``` performs these copies.
-                           => /root/.config/nvim/
-                           => /dev/.config/nvim/
-
-    openbox/               Chef recipe ```install_x``` performs these copies.
-                           => /dev/.config/openbox/
+    openbox/       ```bootstrap``` copies everything here
+                   => /usr/home/dev/.config/openbox/
 ```
 
 ### 2.4. Run the bootstrap script.
@@ -143,6 +106,8 @@ cd /root/bootstrap-debian-9-dev-base
 ### 3. Manual configuration of NeoVim.
 
 Some steps can't be scripted. 
+
+check this
 
 #### 3.1. Install python support for NeoVim plugins.
 
