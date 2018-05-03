@@ -16,10 +16,10 @@ cp scripts/.login ~/.
 printf "Installing Python 2 and 3 packages...\n" 
 printf "  ...installing python\n"
 sudo pkg install python 
-sudo pkg install devel/py-pip 
+sudo python -m pip install -U pip
 printf "  ...installing python3\n"
 sudo pkg install python3
-python3 -m ensurepip
+sudo python3 -m pip install -U pip
 
 printf "Installing Ruby 2.4...\n"
 set ruby="`pkg search ruby | grep '^ruby-2.4' | cut -d ' ' -f 1`"
@@ -44,6 +44,9 @@ echo "URxvt.termName: xterm-256color" >> ~/.Xdefaults
 printf "Installing NeoVim text editor...\n"
 printf "  ...installing package neovim\n"
 sudo pkg install neovim 
+printf "  ...installing Python and Python3 support for NeoVim plugins\n"
+pip2 install --user neovim
+pip3 install --user neovim
 printf "  ...creating NeoVim subdirectories under ~/.config\n"
 mkdir -p ~/.config/nvim/autoload 
 mkdir -p ~/.config/nvim/bundle 
