@@ -1,0 +1,40 @@
+#!/bin/csh
+#------------------------------------------------------------
+# Provision TrueOS FreeBSD instance as a dev env template
+#
+# Version 0.1.0 13 May 2018 Dave Nicolette
+#------------------------------------------------------------
+
+cd ~/bootstrap-trueos-freebsd-dev-base
+
+printf "Configuring csh...\n
+printf "  ...copying .cshrc file\n" 
+cp scripts/.cshrc ~/.
+printf "  ...copying .login file\n"
+cp scripts/.login ~/.
+
+printf "Installing OpenBox window manager...\n"
+printf "  ...installing package openbox\n"
+sudo pkg install openbox 
+printf "  ...copying configuration files\n" 
+mkdir -p ~/.config/openbox
+cp openbox/menu.xml ~/.config/openbox/.
+cp openbox/rc.xml ~/.config/openbox/.
+
+printf "Installing urxvt terminal emulator...\n"
+printf "  ...installing package x11/rxvt-unicode\n"
+sudo pkg install x11/rxvt-unicode
+printf "  ...initializing .Xdefaults settings for urxvt\n"
+echo "URxvt.termName: xterm-256color" >> ~/.Xdefaults 
+
+printf "Installing NeoVim text editor...\n"
+printf "  ...installing package neovim\n"
+sudo pkg install neovim 
+printf "  ...creating NeoVim subdirectories under ~/.config\n"
+mkdir -p ~/.config/nvim/autoload 
+mkdir -p ~/.config/nvim/bundle 
+mkdir -p ~/.config/nvim/pack/vendor/start
+mkdir -p ~/.config/nvim/after/indent 
+cp neovim/init.vim ~/.config/nvim/.
+printf "  ...copying NeoVim configuration file\n"
+mkdir -p ~/.config/nvim/autoload 
