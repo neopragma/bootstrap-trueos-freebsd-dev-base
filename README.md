@@ -136,3 +136,7 @@ To exit from Openbox and log out, you can type the command ```lo``` in a termina
 ### 6.2. NeoVim
 
 See the notes on the [introductory README](http://github.com/neopragma/provision-lightweight-development-environment) for information about NeoVim key bindings and plugins.
+
+### 6.3. VMware and Xorg config for automatic display resolution
+
+If you are running a FreeBSD guest under VMware, consult this guide to configure automatic detection of display resolution: [http://www.unibia.com/unibianet/freebsd/open-vm-tools-freebsd-10-xorg](http://www.unibia.com/unibianet/breebsd/open-vm-tools-freebsd-10-xorg). 
