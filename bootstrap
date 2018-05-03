@@ -13,6 +13,20 @@ cp scripts/.cshrc ~/.
 printf "  ...copying .login file\n"
 cp scripts/.login ~/.
 
+printf "Installing Python 2 and 3 packages...\n" 
+printf "  ...installing python\n"
+sudo pkg install python 
+sudo pkg install devel/py-pip 
+printf "  ...installing python3\n"
+sudo pkg install python3
+python3 -m ensurepip
+
+printf "Installing Ruby 2.4...\n"
+set ruby="`pkg search ruby | grep '^ruby-2.4' | cut -d ' ' -f 1`"
+printf "  ...installing package $ruby\n"
+sudo pkg install "$ruby"
+
+
 printf "Installing OpenBox window manager...\n"
 printf "  ...installing package openbox\n"
 sudo pkg install openbox 
