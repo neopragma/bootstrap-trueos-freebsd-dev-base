@@ -33,6 +33,7 @@ printf "  ...copying configuration files\n"
 mkdir -p ~/.config/openbox
 cp openbox/menu.xml ~/.config/openbox/.
 cp openbox/rc.xml ~/.config/openbox/.
+cp openbox/autostart.sh ~/.config/openbox/.
 
 printf "Installing urxvt terminal emulator...\n"
 printf "  ...installing package x11/rxvt-unicode\n"
