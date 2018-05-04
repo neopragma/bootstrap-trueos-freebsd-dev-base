@@ -9,9 +9,9 @@ cd ~/bootstrap-trueos-freebsd-dev-base
 
 printf "Configuring csh...\n"
 printf "  ...copying .cshrc file\n" 
-cp scripts/.cshrc ~/.
+cp .cshrc ~/.
 printf "  ...copying .login file\n"
-cp scripts/.login ~/.
+cp .login ~/.
 
 printf "Installing Python 2 and 3 packages...\n" 
 printf "  ...installing python\n"
