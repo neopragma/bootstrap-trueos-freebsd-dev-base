@@ -135,7 +135,7 @@ To exit from Openbox and log out, you can type the command ```lo``` in a termina
 
 ### 6.2. NeoVim
 
-See the notes on the [introductory README](http://github.com/neopragma/provision-lightweight-development-environment) for information about NeoVim key bindings and plugins.
+See the notes on the [introductory README](http://github.com/neopragma/provision-lightweight-development-environments) for information about NeoVim key bindings and plugins.
 
 ### 6.3. VMware and Xorg config for automatic display resolution
 
